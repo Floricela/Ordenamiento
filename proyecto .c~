@@ -1,0 +1,133 @@
+#include<stdio.h>
+#include<time.h>
+#include<stdlib.h>
+
+void llena_arreglos(int n,int *a,int *b,double *d);//Llena los arreglos con enteros
+void burbuja(int n,int *a);//Ordenamineto de Burbuja
+void insertionSort(int n,int *b);//Ordenamineto de Insercion
+void ordenacionShell(int n,double *d);//Ordenamineto de Shell
+ void ordenacionquick_sort (int *array, int primero, int ultimo);//ordenamiento quick sort
+
+int main(){
+    int *a,*b,c,num;
+    double *d;
+    printf("Cuantos numeros tiene tu arreglo: ");
+    scanf("%d",&num);
+    a=(int *)malloc(sizeof(int)*num);//Reserva memoria dinamica Burbuja
+    b=(int *)malloc(sizeof(int)*num);//Reserva memoria dinamica insertion sort
+    //c=(int *)malloc(sizeof(int)*num);//reserva memoria dinamica para quicksort
+    d=(double *)malloc(sizeof(int)*num);//Reserva memoria dinamica  shell sort
+    llena_arreglos(num,a,b,d);//Llena los arreglos con enteros
+    printf("\n*************INICIANDO PROCESO BURBUJA*************\n");
+    clock_t start = clock();
+    burbuja(num,a);
+    printf("Tiempo transcurrido para Burbuja para %d elementos: %f\n",num, ((double)clock() - start) / CLOCKS_PER_SEC);
+    printf("\n*************INICIANDO PROCESO INSERTION-SORT*************\n");
+    clock_t start1 = clock();
+    insertionSort(num,b);
+    printf("Tiempo transcurrido para Insertion-sort para %d elementos: %f\n",num, ((double)clock() - start1) / CLOCKS_PER_SEC);
+    printf("\n*************INICIANDO PROCESO SHELL*************\n");
+    clock_t start2 = clock();
+    ordenacionShell(num,d);
+    printf("Tiempo transcurrido para Shell para %d elementos: %f\n",num, ((double)clock() - start2) / CLOCKS_PER_SEC);
+    printf("\n*************INICIANDO PROCESO QUICK-SORT*************\n");
+    clock_t start3 = clock();
+   // quicksort(num,c);
+    printf("Tiempo transcurrido para Quick_sort para %d elementos: %f\n",num, ((double)clock() - start3) / CLOCKS_PER_SEC);
+    printf("")
+    free(a);//Libera memoria
+    free(b);//Libera memoria
+    free(d);//Libera memoria
+    free(d);//Libera memoria
+    return 0;
+}
+
+void llena_arreglos(int n,int *a,int *b,double *d){
+    int i,num;
+    srand(time(NULL));
+    for(i=0;i<n;i++){
+        num=rand()%1000;
+        a[i]=num;
+    }
+}
+
+void burbuja(int n,int *a){//Ordenamineto de Burbuja
+    int i,j,interruptor=1,aux;
+    for (i=0;i<n-1 && interruptor==1;i+=1) {
+		interruptor=0;
+		for (j=0;j<n-i-2;j++) {
+			if (a[j]>a[j+1]) {
+				aux = a[j];
+				interruptor=1;
+				a[j] = a[j+1];
+				a[j+1] = aux;
+			}	
+		}
+	}
+}
+
+void insertionSort(int n,int *b){//Ordenamineto de Insercion
+    int i, aux, j;
+    for(i=1;i<n;i++){
+        aux=b[i];
+        j=i-1;
+        while(j>=0 && b[j]>aux){
+            b[j+1]=b[j];
+            j=j-1;
+        }
+        b[j+1]=aux;
+    }
+}
+
+void ordenacionShell(int n,double *d){//Ordenamineto de Shell
+    int intervalo, i, j, k;
+    intervalo = n / 2;
+    while (intervalo > 0){
+        for (i = intervalo; i < n; i++){
+            j = i - intervalo;
+            while (j >= 0){
+                k = j + intervalo;
+                if (d[j] <= d[k])
+                    j = -1;/* así termina el bucle, par ordenado */
+                else{
+                    double temp;
+                    temp = d[j];
+                    d[j] = d[k];
+                    d[k] = temp;
+                    j -= intervalo;
+                }   
+            }
+        }
+        intervalo = intervalo / 2;
+    }
+}
+ void ordenacionquick_sort (int *array, int primero, int ultimo){
+ 
+int i, j, central;
+double pivote;
+	central = (primero + ultimo)/2;
+	pivote = array[central];
+	i = primero;
+	j = ultimo;
+	do {
+		while (array[i] < pivote) i++;
+			while (array[j] > pivote) j--;
+				if (i<=j)    
+{
+					double tmp;        /* intercambia a[i] con a[j] */
+					tmp = array[i];
+					array[i] =array[j];
+					array[j] = tmp;
+					i++;
+					j--;
+}
+}while (i <= j);
+
+if (primero < j)
+	quicksort(array, primero, j);/* mismo proceso con sublista izqda */
+if (i < ultimo)
+	quicksort(array, i, ultimo); /* mismo proceso con sublista drcha */
+}
+ 
+ 
+ }

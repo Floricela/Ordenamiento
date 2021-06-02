@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include<time.h>
+#include "ordenamiento.h"
+ int main(){
+    int *a,*b,*c,num;
+    double *d;
+    printf("Cuantos numeros tiene tu arreglo: ");
+    scanf("%d",&num);
+    a=(int *)malloc(sizeof(int)*num);//Reserva memoria dinamica Burbuja
+    b=(int *)malloc(sizeof(int)*num);//Reserva memoria dinamica insertion sort
+    c=(int *)malloc(sizeof(int)*num);//reserva memoria dinamica para quicksort
+    d=(double *)malloc(sizeof(int)*num);//Reserva memoria dinamica  shell sort
+    llena_arreglos(num,a,b,d);//Llena los arreglos con enteros
+    printf("\n*************INICIANDO PROCESO BURBUJA*************\n");
+    clock_t start = clock();
+    burbuja(num,a);
+    printf("Tiempo transcurrido para Burbuja para %d elementos: %f\n",num, ((double)clock() - start) / CLOCKS_PER_SEC);
+    printf("\n*************INICIANDO PROCESO INSERTION-SORT*************\n");
+    clock_t start1 = clock();
+    insertionSort(num,b);
+    printf("Tiempo transcurrido para Insertion-sort para %d elementos: %f\n",num, ((double)clock() - start1) / CLOCKS_PER_SEC);
+    printf("\n*************INICIANDO PROCESO SHELL*************\n");
+    clock_t start2 = clock();
+    ordenacionShell(num,d);
+    printf("Tiempo transcurrido para Shell para %d elementos: %f\n",num, ((double)clock() - start2) / CLOCKS_PER_SEC);
+    printf("\n*************INICIANDO PROCESO QUICK-SORT*************\n");
+    clock_t start3 = clock();
+    quicksort(c,0,num);
+    printf("Tiempo transcurrido para Quick_sort para %d elementos: %f\n",num, ((double)clock() - start3) / CLOCKS_PER_SEC);
+    printf("flor");
+    free(a);//Libera memoria
+    free(b);//Libera memoria
+    free(c);//Libera memoria
+    free(d);//Libera memoria
+    return 0;
+}

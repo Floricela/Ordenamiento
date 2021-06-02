@@ -1,0 +1,94 @@
+
+#include <stdio.h>
+#include "ordenamiento.h"
+#include<time.h>
+   
+void llena_arreglos(int n,int *a,int *b,double *d){
+    int i,num;
+    srand(time(NULL));
+    for(i=0;i<n;i++){
+        num=rand()%1000;
+        a[i]=num;
+    }
+}
+
+void burbuja(int n,int *a){//Ordenamineto de Burbuja
+    int i,j,interruptor=1,aux;
+    for (i=0;i<n-1 && interruptor==1;i+=1) {
+		interruptor=0;
+		for (j=0;j<n-i-2;j++) {
+			if (a[j]>a[j+1]) {
+				aux = a[j];
+				interruptor=1;
+				a[j] = a[j+1];
+				a[j+1] = aux;
+			}	
+		}
+	}
+}
+
+void insertionSort(int n,int *b){//Ordenamineto de Insercion
+    int i, aux, j;
+    for(i=1;i<n;i++){
+        aux=b[i];
+        j=i-1;
+        while(j>=0 && b[j]>aux){
+            b[j+1]=b[j];
+            j=j-1;
+        }
+        b[j+1]=aux;
+    }
+}
+
+void ordenacionShell(int n,double *d){//Ordenamineto de Shell
+    int intervalo, i, j, k;
+    intervalo = n / 2;
+    while (intervalo > 0){
+        for (i = intervalo; i < n; i++){
+            j = i - intervalo;
+            while (j >= 0){
+                k = j + intervalo;
+                if (d[j] <= d[k])
+                    j = -1;/* así termina el bucle, par ordenado */
+                else{
+                    double temp;
+                    temp = d[j];
+                    d[j] = d[k];
+                    d[k] = temp;
+                    j -= intervalo;
+                }   
+            }
+        }
+        intervalo = intervalo / 2;
+    }
+}
+ void quicksort (int *array, int primero, int ultimo){
+ 
+int i, j, central;
+double pivote;
+	central = (primero + ultimo)/2;
+	pivote = array[central];
+	i = primero;
+	j = ultimo;
+	do {
+		while (array[i] < pivote) i++;
+			while (array[j] > pivote) j--;
+				if (i<=j)    
+{
+					double tmp;        /* intercambia a[i] con a[j] */
+					tmp = array[i];
+					array[i] =array[j];
+					array[j] = tmp;
+					i++;
+					j--;
+}
+}while (i <= j);
+
+if (primero < j)
+	quicksort(array, primero, j);/* mismo proceso con sublista izqda */
+if (i < ultimo)
+	quicksort(array, i, ultimo); /* mismo proceso con sublista drcha */
+}
+ 
+ 
+ 
